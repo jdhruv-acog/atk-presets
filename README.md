@@ -17,10 +17,10 @@ bunx @aganitha/atk-presets uv-py
 
 ## Stacks
 
-| ID | Stack |
-|---|---|
-| `bun-ts` | Bun · TypeScript · pino · atk-config · atk-debug · Vercel AI SDK |
-| `uv-py` | uv · Python · structlog · pydantic-settings |
+| ID | Stack | Prompt |
+|---|---|---|
+| `bun-ts` | Bun · TypeScript · pino · atk-config · atk-debug · Vercel AI SDK | [bun-ts.md](https://github.com/jdhruv-acog/atk-presets/blob/main/prompts/bun-ts.md) |
+| `uv-py` | uv · Python · structlog · pydantic-settings | [uv-py.md](https://github.com/jdhruv-acog/atk-presets/blob/main/prompts/uv-py.md) |
 
 ## What gets written
 

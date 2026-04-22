@@ -1,6 +1,6 @@
 {
   "name": "@aganitha/atk-presets",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Write agent context files for Aganitha standard stacks",
   "license": "MIT",
   "author": "Aganitha <support@aganitha.ai>",
