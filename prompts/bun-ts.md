@@ -17,7 +17,7 @@ This project uses the Aganitha standard Bun + TypeScript stack. Do not substitut
 
 ## Private registry
 
-`@aganitha` packages are hosted on a private registry. If installation fails, `~/.npmrc` must include:
+`@aganitha` packages are on a private registry. If installation fails, `~/.npmrc` must include:
 
 ```
 @aganitha:registry=https://npm.aganitha.ai/
@@ -30,7 +30,7 @@ Ask the team for credentials if not already configured.
 
 ## Conventions
 
-Unless the codebase already has these established, follow this structure:
+Unless the codebase already has these established:
 
 - `src/config.ts` — load and export the app config singleton
 - `src/logger.ts` — create and export the shared pino logger instance
@@ -39,21 +39,9 @@ Unless the codebase already has these established, follow this structure:
 
 ## @aganitha/atk-config
 
-This is an internal package — do not rely on training data for its API.
+Internal package — do not guess the API. Read the reference before writing any config code:
 
-- **Docs**: `node_modules/@aganitha/atk-config/README.md`
-- **Full guide**: `node_modules/@aganitha/atk-config/docs/guide.md`
-- **Examples**: `node_modules/@aganitha/atk-config/examples/`
-- **Commander integration**: `node_modules/@aganitha/atk-config/examples/11-commander/`
-
-Critical rules:
-
-- Every schema leaf requires both `format` and `default` — missing either throws at load time
-- `loadConfig` is async — always `await` it
-- Validates on load and throws before returning — the result is always safe to use
-- Dot-notation access is fully typed: `config.get('database.host')` returns the inferred type
-- Enum arrays require `as const`: `{ format: ['a', 'b'] as const, default: 'a' }`
-- Env vars are explicitly declared per key via `env` — there is no auto-discovery by name
+`node_modules/@aganitha/atk-config/docs/llms.txt`
 
 Typical `src/config.ts`:
 
@@ -69,40 +57,21 @@ export const config = await loadConfig({
 });
 ```
 
-**Commander integration** — read `examples/11-commander/` for the complete working pattern. The short version: Commander owns CLI UX; atk-config owns everything else. The handoff is one line:
-
-```ts
-const config = await loadConfig({
-  schema,
-  overrides: { ...program.opts(), ...cmd.opts() },
-});
-```
-
-Schema keys that should be CLI-overridable must be **top-level camelCase** matching Commander's parsed option name (`--log-level` → `logLevel`). Deeply nested schema keys cannot be set via Commander — use env vars for those.
+For Commander integration see the working example at `node_modules/@aganitha/atk-config/examples/11-commander/`.
 
 ---
 
 ## @aganitha/atk-debug
 
-This is an internal package — do not rely on training data for its API.
+Internal package — do not guess the API. Read the reference before writing any debug code:
 
-- **Docs**: `node_modules/@aganitha/atk-debug/README.md`
-- **Full guide**: `node_modules/@aganitha/atk-debug/GUIDE.md`
-- **Examples**: `node_modules/@aganitha/atk-debug/examples/`
-
-Critical rules:
-
-- Default import: `import debug from '@aganitha/atk-debug'`
-- Must call `debug.enable('namespace:*')` before creating any loggers, or set the `DEBUG` env var
-- Suppressed in production by default — this is intentional; use pino for production logs
-- Namespace convention: `service:component` (e.g. `workflow:api`, `db:query`)
-- Extend for sub-components: `log.extend('auth')` → `workflow:api:auth`
+`node_modules/@aganitha/atk-debug/docs/llms.txt`
 
 ---
 
 ## Pino
 
-Create one shared instance in `src/logger.ts` and import it everywhere — never create multiple logger instances. If the codebase already has a logger, use it.
+Create one shared instance in `src/logger.ts` and import it everywhere. If the codebase already has a logger, use it.
 
 ```ts
 // src/logger.ts
@@ -117,7 +86,7 @@ export const logger = pino({
 });
 ```
 
-Use `logger` for structured request and system logs (always on). Use `atk-debug` for trace-level developer visibility (namespace-gated, off in production).
+Use pino for structured request/system logs (always on). Use atk-debug for trace-level developer visibility (namespace-gated, off in production by default).
 
 ---
 
@@ -128,12 +97,12 @@ import { generateText, streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
 
 const { text } = await generateText({
-  model: openai("gpt-5.4-mini"),
+  model: openai("gpt-4o"),
   prompt: "...",
 });
 ```
 
-Default to `gpt-5.4-mini` unless the task requires otherwise.
+Default to `gpt-4o` unless the task requires otherwise.
 
 ---
 

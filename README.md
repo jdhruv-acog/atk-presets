@@ -38,7 +38,7 @@ bunx @aganitha/atk-presets uv-py
 
 1. **Critical rules** — the non-obvious things an agent would get wrong: mandatory schema fields, async requirements, import patterns, naming conventions. These rarely change.
 
-2. **Pointers to docs** — paths like `node_modules/@aganitha/atk-config/docs/guide.md`. The agent reads the actual installed docs when it needs them.
+2. **Pointers to docs** — paths like `node_modules/@aganitha/atk-config/docs/llms.txt`. The agent reads the actual installed docs when it needs them.
 
 When a library ships updated docs, the agent picks them up automatically from `node_modules`. Nothing in `AGENTS.md` goes stale.
 
