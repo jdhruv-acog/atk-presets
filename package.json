@@ -1,0 +1,42 @@
+{
+  "name": "@aganitha/atk-presets",
+  "version": "0.1.0",
+  "description": "Write agent context files for Aganitha standard stacks",
+  "license": "MIT",
+  "author": "Aganitha <support@aganitha.ai>",
+  "type": "module",
+  "bin": {
+    "atk-presets": "./cli.ts"
+  },
+  "files": [
+    "cli.ts",
+    "src/",
+    "prompts/"
+  ],
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun test && bun run typecheck"
+  },
+  "publishConfig": {
+    "registry": "https://npm.aganitha.ai/"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "keywords": [
+    "aganitha",
+    "agents",
+    "claude",
+    "dx",
+    "stack"
+  ],
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "commander": "^14.0.3"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5"
+  }
+}
